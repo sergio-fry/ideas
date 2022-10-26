@@ -28,12 +28,13 @@ end
 Run as rack up
 
 ```ruby
+# config.ru
 require "virtual_fs"
+require_relative "./storage"
 
-run VirtualFS::FileSystem.new(
-  Storage.new
-).expose(
-  VirtualFS::WebDAV.new "/"
-)
+run VirtualFS::WebDAV.new(
+  "/webdav",
+  VirtualFS::FileSystem.new(Storage.new)
+).rack
 ```
 
